@@ -19,6 +19,9 @@ export class AuthUser {
     @Prop({type:Number})
     AltMobileNo:Number;
 
+    @Prop({type:String,required:true})
+    Password:String;
+
     @Prop({type:String})
     Otp:String;
 
@@ -27,6 +30,9 @@ export class AuthUser {
 
     @Prop({type:Boolean})
     IsNew:Boolean;
+
+    @Prop({type:{fileId:String,url:String}})
+    Profile:{fileId:String,url:String};
 
     @Prop({type:Boolean})
     IsRegular:Boolean;
