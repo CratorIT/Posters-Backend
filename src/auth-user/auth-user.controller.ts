@@ -7,9 +7,11 @@ import {
   Param,
   Delete,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthUserService } from './auth-user.service';
 import { RegisterDto,LoginDto } from './dto/create-auth-user.dto';
+import { AdminAuthGuard } from './guards/auth.guards';
 
 @Controller('auth-user')
 export class AuthUserController {
@@ -25,5 +27,15 @@ export class AuthUserController {
  @Post("login")
   async loginUser(@Body() loginDto:LoginDto,@Res() res:Response){
     return this.authUserService.loginUser(loginDto,res)
+  }
+
+
+  // get all user for cms
+  // protected route for admin
+  @UseGuards(AdminAuthGuard)
+  @Get('/admin/getAllUsers')
+  async findAllUser(@Res() res:Response){
+    return this.authUserService.findAllUser(res)
+
   }
 }

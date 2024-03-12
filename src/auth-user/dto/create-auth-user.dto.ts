@@ -1,14 +1,24 @@
-import { IsEmail, IsMobilePhone, IsString } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsString,validate,IsNotEmpty, Validate } from 'class-validator';
 import exp from 'constants';
+
+class IsEitherEmailOrMobileNo {
+  validate(object: any) {
+    return 'Email' in object || 'MobileNo' in object;
+  }
+  defaultMessage() {
+    return 'Either Email or MobileNo must be provided';
+  }
+}
 
 export class RegisterDto {
   @IsString()
   UserName: string;
 
   @IsEmail()
+  @IsNotEmpty()
   Email: string;
 
-  @IsMobilePhone()
+  @IsNotEmpty()
   MobileNo: number;
 
   @IsString()
@@ -16,12 +26,14 @@ export class RegisterDto {
 }
 
 export class LoginDto {
-  @IsEmail()
-  Email: string;
 
-  @IsMobilePhone()
-  MobileNo: number;
+  Email?: string;
+  
+  MobileNo?: number;
 
   @IsString()
   Password: string;
 }
+
+
+
