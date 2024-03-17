@@ -1,52 +1,77 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type ProductType = HydratedDocument<Product>
+export type ProductType = HydratedDocument<Product>;
 
-@Schema({timestamps:true})
+interface Image {
+  fileId: { type: String };
+  lowUrl: { type: String };
+  mediumUrl: { type: String };
+  highUrl: { type: String };
+}
+
+@Schema({ timestamps: true })
 export class Product {
   @Prop({ type: String, required: true, unique: true })
   SKU: String;
 
-  @Prop({type:String,required:true})
-  Name:String;
+  @Prop({ type: String, required: true })
+  Name: String;
 
-  @Prop({type:String,required:true})
-  Categroy:String;
+  @Prop({ type: String, required: true })
+  Category: String;
 
-  @Prop({type:Array})
-  SubCategory:Array<String>;
+  @Prop({ type: Array })
+  SubCategory: Array<String>;
 
-  @Prop({type:{fileId:String,Url:String}})
-  Image:{fileId:String,Url:string};
+  @Prop({ type: Number })
+  Cost: Number;
 
-  @Prop({type:String})
-  AltImageName:String;
+  @Prop({ type: Number })
+  MRP: Number;
 
-  @Prop({type:String})
-  Description:String;
+  @Prop({ type: Number })
+  SellingPrice: Number;
 
-  @Prop({type:Array})
-  MetaTag:[];
+  @Prop([
+    {
+      fileId: { type: String },
+      lowUrl: { type: String },
+      mediumUrl: { type: String },
+      highUrl: { type: String },
+    },
+  ])
+  Image: [Image];
 
-  @Prop({type:Number})
-  PopularityCount:Number;
+  @Prop({ type: String })
+  AltImageName: String;
 
-  @Prop({type:Boolean,default:false})
-  IsPopular:Boolean;
+  @Prop({ type: String })
+  Description: String;
 
-  @Prop({type:Boolean,default:false})
-  IsActive:Boolean;
+  @Prop({ type: Array })
+  MetaTag: [];
 
-  @Prop({type:Array})
-  Reviews:[]
+  @Prop({ type: Number })
+  PopularityCount: Number;
 
-  @Prop({enum:["Poster","Toy","Tshirt","KeyChain"], type:String,})
-  Type:String;
+  @Prop({ type: Boolean, default: false })
+  IsPopular: Boolean;
 
-  @Prop({type:Boolean,default:false})
-  IsDelete:boolean
+  @Prop({ type: Boolean, default: false })
+  IsActive: Boolean;
 
+  @Prop({ type: Boolean, default: false })
+  IsDiscountAvailable: Boolean;
+
+  @Prop({ type: Array })
+  Reviews: [];
+
+  @Prop({ enum: ['Poster', 'Toy', 'Tshirt', 'KeyChain'], type: String })
+  Type: String;
+
+  @Prop({ type: Boolean, default: false })
+  IsDelete: boolean;
 }
 
-export const ProductSchema = SchemaFactory.createForClass(Product)
+export const ProductSchema = SchemaFactory.createForClass(Product);
