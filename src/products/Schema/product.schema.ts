@@ -4,6 +4,7 @@ import { HydratedDocument } from 'mongoose';
 export type ProductType = HydratedDocument<Product>;
 
 interface Image {
+  imageName:{type:String};
   fileId: { type: String };
   lowUrl: { type: String };
   mediumUrl: { type: String };
@@ -35,6 +36,7 @@ export class Product {
 
   @Prop([
     {
+      imageName:{type:String},
       fileId: { type: String },
       lowUrl: { type: String },
       mediumUrl: { type: String },
